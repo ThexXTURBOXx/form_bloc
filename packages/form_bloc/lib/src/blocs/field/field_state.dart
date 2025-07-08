@@ -11,7 +11,7 @@ mixin FieldBlocStateBase {
   bool get isValid;
 
   /// Identifies whether the FieldBloc has been added to the FormBloc
-  FormBloc? get formBloc;
+  FormBloc<dynamic, dynamic>? get formBloc;
 
   bool get hasFormBloc => formBloc != null;
 }
@@ -61,7 +61,7 @@ abstract class FieldBlocState<Value, Suggestion, ExtraData> extends Equatable
 
   /// The current [FormBloc] that contains this `FieldBloc`.
   @override
-  final FormBloc? formBloc;
+  final FormBloc<dynamic, dynamic>? formBloc;
 
   /// Transform [value] in a JSON value.
   /// By default returns [value], but you can
@@ -145,31 +145,31 @@ abstract class FieldBlocState<Value, Suggestion, ExtraData> extends Equatable
     Param<Suggestions<Suggestion>?>? suggestions,
     bool? isValidated,
     bool? isValidating,
-    Param<FormBloc?> formBloc,
+    Param<FormBloc<dynamic, dynamic>?> formBloc,
     Param<ExtraData>? extraData,
   });
 
   @override
   String toString([String extra = '']) {
-    var _toString = '';
+    var toString = '';
 
-    _toString += '$runtimeType {';
-    _toString += '\n  name: $name';
-    _toString += ',\n  isValueChanged: $isValueChanged';
-    _toString += ',\n  updatedValue: $updatedValue';
-    _toString += ',\n  initialValue: $initialValue';
-    _toString += ',\n  value: $value';
-    _toString += ',\n  error: $error';
-    _toString += ',\n  isDirty: $isDirty';
-    _toString += ',\n  isValidated: $isValidated';
-    _toString += ',\n  isValidating: $isValidating';
-    _toString += ',\n  isValid: $isValid';
-    _toString += ',\n  extraData: $extraData';
-    _toString += extra;
-    _toString += ',\n  formBloc: $formBloc';
-    _toString += '\n}';
+    toString += '$runtimeType {';
+    toString += '\n  name: $name';
+    toString += ',\n  isValueChanged: $isValueChanged';
+    toString += ',\n  updatedValue: $updatedValue';
+    toString += ',\n  initialValue: $initialValue';
+    toString += ',\n  value: $value';
+    toString += ',\n  error: $error';
+    toString += ',\n  isDirty: $isDirty';
+    toString += ',\n  isValidated: $isValidated';
+    toString += ',\n  isValidating: $isValidating';
+    toString += ',\n  isValid: $isValid';
+    toString += ',\n  extraData: $extraData';
+    toString += extra;
+    toString += ',\n  formBloc: $formBloc';
+    toString += '\n}';
 
-    return _toString;
+    return toString;
   }
 
   @override
@@ -191,7 +191,7 @@ abstract class FieldBlocState<Value, Suggestion, ExtraData> extends Equatable
 abstract class MultiFieldBlocState<ExtraData> extends Equatable
     with FieldBlocStateBase {
   @override
-  final FormBloc? formBloc;
+  final FormBloc<dynamic, dynamic>? formBloc;
 
   @override
   final String name;
@@ -215,7 +215,7 @@ abstract class MultiFieldBlocState<ExtraData> extends Equatable
   Iterable<FieldBloc> get flatFieldBlocs;
 
   MultiFieldBlocState<ExtraData> copyWith({
-    Param<FormBloc?>? formBloc,
+    Param<FormBloc<dynamic, dynamic>?>? formBloc,
     bool? isValidating,
     bool? isValid,
     Param<ExtraData>? extraData,

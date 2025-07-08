@@ -1,11 +1,17 @@
 name: root_workspace
 
+publish_to: none
+
 environment:
-  sdk: '>=2.18.0 <4.0.0'
+  sdk: '>=3.6.0 <4.0.0'
+
+workspace:
+  - form_bloc_web
+  - packages/flutter_form_bloc
+  - packages/flutter_form_bloc/example
+  - packages/form_bloc
+  - packages/form_bloc/example
 
 dev_dependencies:
-  melos: ^3.1.1
-
-scripts:
-  analyze:
-    exec: dart analyze .
+  flutter_lints: ^6.0.0
+  melos: ^7.0.0-dev.9

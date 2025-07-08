@@ -22,8 +22,7 @@ class RouteNames {
       '/loading_and_initializing_example';
   static const String asyncFieldValidationExample =
       '/async_field_validation_example';
-  static const String conditionalFieldsExample =
-      '/conditional_fields_example';
+  static const String conditionalFieldsExample = '/conditional_fields_example';
   static const String serializedFormExample = '/serialized_form_example';
   static const String builtInWidgetsExample = '/built_in_widgets_example';
   static const String submissionErrorToFieldExample =
@@ -43,7 +42,8 @@ final routes = <String, WidgetBuilder>{
       const LoadingAndInitializingExamplePage(),
   RouteNames.asyncFieldValidationExample: (_) =>
       const AsyncFieldValidationExamplePage(),
-  RouteNames.conditionalFieldsExample: (_) => const ConditionalFieldsExamplePage(),
+  RouteNames.conditionalFieldsExample: (_) =>
+      const ConditionalFieldsExamplePage(),
   RouteNames.serializedFormExample: (_) => const SerializedFormExamplePage(),
   RouteNames.builtInWidgetsExample: (_) => const AllFieldsExamplePage(),
   RouteNames.submissionErrorToFieldExample: (_) =>

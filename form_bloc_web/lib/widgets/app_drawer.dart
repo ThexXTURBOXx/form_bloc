@@ -1,23 +1,21 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
 import 'package:form_bloc_web/constants/style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../routes.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({required this.permanentlyDisplay, Key? key})
-      : super(key: key);
+  const AppDrawer({required this.permanentlyDisplay, super.key});
 
   final bool permanentlyDisplay;
 
   @override
-  _AppDrawerState createState() => _AppDrawerState();
+  AppDrawerState createState() => AppDrawerState();
 }
 
-class _AppDrawerState extends State<AppDrawer> with RouteAware {
+class AppDrawerState extends State<AppDrawer> with RouteAware {
   String? _selectedRoute;
   late AppRouteObserver _routeObserver;
 
@@ -155,7 +153,7 @@ class _AppDrawerState extends State<AppDrawer> with RouteAware {
       alignment: Alignment.centerLeft,
       child: Text(
         'Examples',
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }
@@ -248,11 +246,9 @@ class _AppDrawerState extends State<AppDrawer> with RouteAware {
     );
   }
 
-  _launchGitHubURL() async {
+  Future<void> _launchGitHubURL() async {
     const url = 'https://github.com/GiancarloCode/form_bloc';
-    if (await canLaunch(url)) {
-      await launch(url);
-    }
+    await launchUrl(Uri.parse(url));
   }
 
   void _updateSelectedRoute() {
@@ -264,14 +260,13 @@ class _AppDrawerState extends State<AppDrawer> with RouteAware {
 
 class DrawerItem extends StatefulWidget {
   const DrawerItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.routeName,
     required String? selectedRoute,
     required this.permanentlyDisplay,
     this.iconData,
-  })  : isCurrentRoute = routeName == selectedRoute,
-        super(key: key);
+  }) : isCurrentRoute = routeName == selectedRoute;
 
   final String title;
   final String routeName;
@@ -280,10 +275,10 @@ class DrawerItem extends StatefulWidget {
   final bool permanentlyDisplay;
 
   @override
-  _DrawerItemState createState() => _DrawerItemState();
+  DrawerItemState createState() => DrawerItemState();
 }
 
-class _DrawerItemState extends State<DrawerItem> {
+class DrawerItemState extends State<DrawerItem> {
   final _borderRadius = const BorderRadius.only(
     topRight: Radius.circular(25),
     bottomRight: Radius.circular(25),

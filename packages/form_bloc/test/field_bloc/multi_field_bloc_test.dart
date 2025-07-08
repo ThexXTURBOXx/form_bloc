@@ -79,7 +79,7 @@ void main() {
 
         expect(
           list.stream,
-          emitsInOrder(<ListFieldBlocState>[expected]),
+          emitsInOrder(<ListFieldBlocState<dynamic, dynamic>>[expected]),
         );
 
         list.updateExtraData('This is extra data');

@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 void main() => runApp(const App());
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +38,17 @@ class SubmissionProgressFormBloc extends FormBloc<String, String> {
   void onSubmitting() async {
     debugPrint(username.value);
 
-    final int _currentUploadIndex = _fakeUploads.length;
+    final int currentUploadIndex = _fakeUploads.length;
     _fakeUploads.add(FakeUpload());
     _fakeUploadProgressSubscriptions.add(
-      _fakeUploads[_currentUploadIndex].uploadProgress.listen(
+      _fakeUploads[currentUploadIndex].uploadProgress.listen(
         (progress) {
-          if (!_fakeUploads[_currentUploadIndex].isCancelled) {
+          if (!_fakeUploads[currentUploadIndex].isCancelled) {
             emitSubmitting(progress: progress);
           }
         },
         onDone: () async {
-          if (!_fakeUploads[_currentUploadIndex]._isCancelled) {
+          if (!_fakeUploads[currentUploadIndex]._isCancelled) {
             await Future<void>.delayed(const Duration(milliseconds: 400));
             emitSuccess();
           }
@@ -74,6 +74,7 @@ class SubmissionProgressFormBloc extends FormBloc<String, String> {
 class FakeUpload {
   final BehaviorSubject<double> _subject = BehaviorSubject.seeded(0.0);
   bool _isCancelled = false;
+
   bool get isCancelled => _isCancelled;
 
   Stream<double> get uploadProgress => _subject.stream;
@@ -107,7 +108,7 @@ class FakeUpload {
 }
 
 class SubmissionProgressForm extends StatelessWidget {
-  const SubmissionProgressForm({Key? key}) : super(key: key);
+  const SubmissionProgressForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +169,7 @@ class SubmissionProgressForm extends StatelessWidget {
 }
 
 class SubmitButton extends StatelessWidget {
-  const SubmitButton({Key? key}) : super(key: key);
+  const SubmitButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -177,14 +178,14 @@ class SubmitButton extends StatelessWidget {
     return BlocBuilder<SubmissionProgressFormBloc, FormBlocState>(
       builder: (context, state) {
         if (state is FormBlocSubmitting || state is FormBlocSuccess) {
-          return WillPopScope(
-              onWillPop: () async {
+          return PopScope(
+              canPop: () {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text(
                         'Can\'t close, please wait until form is submitted, or cancel the submission.')));
 
                 return false;
-              },
+              }(),
               child: state is FormBlocSuccess ||
                       (state is FormBlocSubmitting && !state.isCanceling)
                   ? ElevatedButton(
@@ -210,11 +211,11 @@ class LiquidLinearProgressIndicatorWithText extends ImplicitlyAnimatedWidget {
   final double percent;
 
   const LiquidLinearProgressIndicatorWithText({
-    Key? key,
+    super.key,
     required this.percent,
-    Duration duration = const Duration(milliseconds: 300),
-    Curve curve = Curves.linear,
-  }) : super(duration: duration, curve: curve, key: key);
+    super.duration = const Duration(milliseconds: 300),
+    super.curve,
+  });
 
   @override
   ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() =>
@@ -254,16 +255,18 @@ class LoadingDialog extends StatelessWidget {
         useRootNavigator: false,
         barrierDismissible: false,
         builder: (_) => LoadingDialog(key: key),
-      ).then((_) => FocusScope.of(context).requestFocus(FocusNode()));
+      ).then((_) {
+        if (context.mounted) FocusScope.of(context).requestFocus(FocusNode());
+      });
 
   static void hide(BuildContext context) => Navigator.pop(context);
 
-  const LoadingDialog({Key? key}) : super(key: key);
+  const LoadingDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Center(
         child: Card(
           child: Container(
@@ -279,7 +282,7 @@ class LoadingDialog extends StatelessWidget {
 }
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({Key? key}) : super(key: key);
+  const SuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

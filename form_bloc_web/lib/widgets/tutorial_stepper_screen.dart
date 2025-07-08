@@ -3,15 +3,15 @@ import 'package:form_bloc_web/constants/style.dart';
 import 'package:form_bloc_web/widgets/gradient_button.dart';
 
 class TutorialStepperScreen extends StatefulWidget {
-  const TutorialStepperScreen({Key? key, required this.steps}) : super(key: key);
+  const TutorialStepperScreen({super.key, required this.steps});
 
   final List<TutorialStep> steps;
 
   @override
-  _TutorialStepperScreenState createState() => _TutorialStepperScreenState();
+  TutorialStepperScreenState createState() => TutorialStepperScreenState();
 }
 
-class _TutorialStepperScreenState extends State<TutorialStepperScreen> {
+class TutorialStepperScreenState extends State<TutorialStepperScreen> {
   int currentStep = 0;
 
   void _updateStep(int step) {

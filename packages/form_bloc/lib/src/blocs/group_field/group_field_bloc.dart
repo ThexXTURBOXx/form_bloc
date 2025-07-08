@@ -5,26 +5,19 @@ class GroupFieldBlocState<T extends FieldBloc, ExtraData>
   final Map<String, T> fieldBlocs;
 
   GroupFieldBlocState({
-    required FormBloc? formBloc,
-    required String name,
-    required bool isValidating,
-    required bool isValid,
-    required ExtraData? extraData,
+    required super.formBloc,
+    required super.name,
+    required super.isValidating,
+    required super.isValid,
+    required super.extraData,
     required Iterable<T> fieldBlocs,
-  })  : fieldBlocs = {
+  }) : fieldBlocs = {
           for (final fb in fieldBlocs) fb.state.name: fb,
-        },
-        super(
-          formBloc: formBloc,
-          name: name,
-          isValidating: isValidating,
-          isValid: isValid,
-          extraData: extraData,
-        );
+        };
 
   @override
   GroupFieldBlocState<T, ExtraData> copyWith({
-    Param<FormBloc?>? formBloc,
+    Param<FormBloc<dynamic, dynamic>?>? formBloc,
     bool? isValidating,
     bool? isValid,
     Param<ExtraData>? extraData,

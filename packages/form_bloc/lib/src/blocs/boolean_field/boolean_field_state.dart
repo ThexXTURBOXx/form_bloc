@@ -3,35 +3,21 @@ part of '../field/field_bloc.dart';
 class BooleanFieldBlocState<ExtraData>
     extends FieldBlocState<bool, bool, ExtraData?> {
   BooleanFieldBlocState({
-    required bool isValueChanged,
-    required bool initialValue,
-    required bool updatedValue,
-    required bool value,
-    required Object? error,
-    required bool isDirty,
-    required Suggestions<bool>? suggestions,
-    required bool isValidated,
-    required bool isValidating,
-    FormBloc? formBloc,
-    required String name,
-    List additionalProps = const <dynamic>[],
-    dynamic Function(bool value)? toJson,
-    ExtraData? extraData,
-  }) : super(
-          isValueChanged: isValueChanged,
-          initialValue: initialValue,
-          updatedValue: updatedValue,
-          value: value,
-          error: error,
-          isDirty: isDirty,
-          suggestions: suggestions,
-          isValidated: isValidated,
-          isValidating: isValidating,
-          formBloc: formBloc,
-          name: name,
-          toJson: toJson,
-          extraData: extraData,
-        );
+    required super.isValueChanged,
+    required super.initialValue,
+    required super.updatedValue,
+    required super.value,
+    required super.error,
+    required super.isDirty,
+    required super.suggestions,
+    required super.isValidated,
+    required super.isValidating,
+    super.formBloc,
+    required super.name,
+    List<dynamic> additionalProps = const <dynamic>[],
+    super.toJson,
+    super.extraData,
+  });
 
   @override
   BooleanFieldBlocState<ExtraData> copyWith({
@@ -44,7 +30,7 @@ class BooleanFieldBlocState<ExtraData>
     Param<Suggestions<bool>?>? suggestions,
     bool? isValidated,
     bool? isValidating,
-    Param<FormBloc?>? formBloc,
+    Param<FormBloc<dynamic, dynamic>?>? formBloc,
     Param<ExtraData?>? extraData,
   }) {
     return BooleanFieldBlocState(

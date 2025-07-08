@@ -63,12 +63,13 @@ mixin FieldBloc<State extends FieldBlocStateBase> on BlocBase<State> {
   /// {@template form_bloc.FieldBloc.updateFormBloc}
   /// Update the [formBloc] and [autoValidate] to the fieldBloc
   /// {@endtemplate}
-  void updateFormBloc(FormBloc formBloc, {bool autoValidate = false});
+  void updateFormBloc(FormBloc<dynamic, dynamic> formBloc,
+      {bool autoValidate = false});
 
   /// {@template form_bloc.FieldBloc.removeFormBloc}
   /// Remove the [formBloc] to the fieldBloc
   /// {@endtemplate}
-  void removeFormBloc(FormBloc formBloc);
+  void removeFormBloc(FormBloc<dynamic, dynamic> formBloc);
 }
 
 /// The base class with the common behavior
@@ -101,7 +102,7 @@ abstract class SingleFieldBloc<
   */
 
   final _asyncValidatorsSubject = PublishSubject<Value>();
-  late StreamSubscription _asyncValidatorsSubscription;
+  late StreamSubscription<ValueAndError<Value>> _asyncValidatorsSubscription;
   final _selectedSuggestionSubject = PublishSubject<Suggestion>();
 
   StreamSubscription<void>? _revalidateFieldBlocsSubscription;
@@ -161,22 +162,22 @@ abstract class SingleFieldBloc<
     required Stream<R> Function(State previous, State current) onData,
     void Function(State previous, State current, R result)? onFinish,
   }) {
-    final _onStart = onStart ?? (_, __) {};
+    final onStart0 = onStart ?? (_, __) {};
 
-    final _onFinish = onFinish ?? (State p, State c, R r) {};
+    final onFinish0 = onFinish ?? (State p, State c, R r) {};
 
     return stream
         .startWith(state)
         .distinct((p, c) => p.value == c.value)
         .pairwise()
-        .doOnData((states) => _onStart(states.first, states.last))
+        .doOnData((states) => onStart0(states.first, states.last))
         .debounceTime(debounceTime)
         .switchMap<List<dynamic>>(
           (states) => onData(states.first, states.last)
               .map((r) => <dynamic>[states.first, states.last, r]),
         )
         .listen((list) =>
-            _onFinish(list[0] as State, list[1] as State, list[2] as R));
+            onFinish0(list[0] as State, list[1] as State, list[2] as R));
   }
 
   // ===========================================================================
@@ -330,7 +331,10 @@ abstract class SingleFieldBloc<
     // TODO: It does not manage MultiFieldBloc fields
     if (fieldBlocs.isNotEmpty) {
       _revalidateFieldBlocsSubscription = Rx.combineLatest<dynamic, void>(
-        fieldBlocs.whereType<SingleFieldBloc>().toList().map(
+        fieldBlocs
+            .whereType<SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>()
+            .toList()
+            .map(
           (state) {
             return state.stream.map<dynamic>((state) => state.value).distinct();
           },
@@ -385,7 +389,7 @@ abstract class SingleFieldBloc<
 
   /// {@template form_bloc.FieldBloc.updateExtraData}
   /// Updates the `extraData` of the current state.
-  /// {@endtemplate form_bloc.FieldBloc.updateExtraData}
+  /// {@endtemplate}
   void updateExtraData(ExtraData extraData) {
     emit(state.copyWith(
       extraData: Param(extraData),
@@ -549,7 +553,8 @@ abstract class SingleFieldBloc<
   /// {@macro form_bloc.FieldBloc.updateFormBloc}
   /// See [FieldBloc.updateFormBloc]
   @override
-  void updateFormBloc(FormBloc formBloc, {bool autoValidate = false}) {
+  void updateFormBloc(FormBloc<dynamic, dynamic> formBloc,
+      {bool autoValidate = false}) {
     _autoValidate = autoValidate;
     if (!_autoValidate) {
       emit(state.copyWith(
@@ -568,7 +573,7 @@ abstract class SingleFieldBloc<
   /// {@macro form_bloc.FieldBloc.removeFormBloc}
   /// See [FieldBloc.removeFormBloc]
   @override
-  void removeFormBloc(FormBloc formBloc) {
+  void removeFormBloc(FormBloc<dynamic, dynamic> formBloc) {
     if (state.formBloc == formBloc) {
       emit(state.copyWith(
         formBloc: Param(null),
@@ -647,13 +652,13 @@ class ValidationStatus extends Equatable {
 
 class MultiFieldBloc<ExtraData, TState extends MultiFieldBlocState<ExtraData>>
     extends Cubit<TState> with FieldBloc<TState> {
-  late final StreamSubscription _onValidationStatus;
+  late final StreamSubscription<ValidationStatus> _onValidationStatus;
 
   bool _autoValidate = false;
 
   bool get autoValidate => _autoValidate;
 
-  MultiFieldBloc(TState initialState) : super(initialState) {
+  MultiFieldBloc(super.initialState) {
     _onValidationStatus = stream.switchMap((state) {
       return MultiFieldBloc.onValidationStatus(state.flatFieldBlocs);
     }).listen((validationStatus) {
@@ -706,7 +711,8 @@ class MultiFieldBloc<ExtraData, TState extends MultiFieldBlocState<ExtraData>>
 
   /// See [FieldBloc.updateFormBloc]
   @override
-  void updateFormBloc(FormBloc formBloc, {bool autoValidate = false}) {
+  void updateFormBloc(FormBloc<dynamic, dynamic> formBloc,
+      {bool autoValidate = false}) {
     _autoValidate = autoValidate;
 
     emit(state.copyWith(
@@ -722,7 +728,7 @@ class MultiFieldBloc<ExtraData, TState extends MultiFieldBlocState<ExtraData>>
 
   /// See [FieldBloc.removeFormBloc]
   @override
-  void removeFormBloc(FormBloc formBloc) {
+  void removeFormBloc(FormBloc<dynamic, dynamic> formBloc) {
     if (state.formBloc == formBloc) {
       emit(state.copyWith(
         formBloc: Param(null),

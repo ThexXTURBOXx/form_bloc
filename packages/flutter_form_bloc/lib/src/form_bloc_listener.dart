@@ -4,7 +4,7 @@ import 'package:form_bloc/form_bloc.dart' as form_bloc;
 
 typedef FormBlocListenerCallback<
         FormBlocState extends form_bloc
-            .FormBlocState<SuccessResponse, ErrorResponse>,
+        .FormBlocState<SuccessResponse, ErrorResponse>,
         SuccessResponse,
         ErrorResponse>
     = void Function(BuildContext context, FormBlocState state);
@@ -19,9 +19,9 @@ class FormBlocListener<
   /// [BlocListener] that reacts to the state changes of the FormBloc.
   /// {@macro bloclistener}
   FormBlocListener({
-    Key? key,
+    super.key,
     this.formBloc,
-    Widget? child,
+    super.child,
     this.onLoading,
     this.onLoaded,
     this.onLoadFailed,
@@ -34,8 +34,6 @@ class FormBlocListener<
     this.onDeleteFailed,
     this.onDeleteSuccessful,
   }) : super(
-          key: key,
-          child: child,
           bloc: formBloc,
           listenWhen: (previousState, state) =>
               previousState.runtimeType != state.runtimeType,
@@ -73,8 +71,8 @@ class FormBlocListener<
                     .FormBlocDeleteFailed<SuccessResponse, ErrorResponse> &&
                 onDeleteFailed != null) {
               onDeleteFailed(context, state);
-            } else if (state
-                    is form_bloc.FormBlocDeleteSuccessful<SuccessResponse, ErrorResponse> &&
+            } else if (state is form_bloc
+                    .FormBlocDeleteSuccessful<SuccessResponse, ErrorResponse> &&
                 onDeleteSuccessful != null) {
               onDeleteSuccessful(context, state);
             }

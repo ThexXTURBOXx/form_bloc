@@ -6,10 +6,10 @@ import '../utils/states.dart';
 
 class GroupFieldBlocImpl extends GroupFieldBloc<FieldBloc, dynamic> {
   GroupFieldBlocImpl({
-    required String name,
-    required List<FieldBloc> fieldBlocs,
-    required dynamic extraData,
-  }) : super(fieldBlocs: fieldBlocs, name: name, extraData: extraData);
+    required String super.name,
+    required super.fieldBlocs,
+    required super.extraData,
+  });
 
   @override
   String toString() {
@@ -168,7 +168,8 @@ void main() {
           fieldBlocListWithAll3,
         ];
 
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[
           textFieldBloc1,
           textFieldBloc2,
           /* groupFieldWithSingleFieldBlocs1 */
@@ -238,7 +239,8 @@ void main() {
         final fieldBlocs = <FieldBloc>[
           fieldBlocList21,
         ];
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[];
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[];
 
         final singleFieldBlocs =
             FormBlocUtils.getAllSingleFieldBlocs(fieldBlocs);
@@ -262,7 +264,8 @@ void main() {
         final fieldBlocs = <FieldBloc>[
           fieldBlocList21,
         ];
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[
           textFieldBloc1,
           booleanFieldBloc1,
           multiSelectFieldBloc3
@@ -281,7 +284,8 @@ void main() {
         final fieldBlocs = <FieldBloc>[
           groupFieldBlocWithAll1,
         ];
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[
           selectFieldBloc1,
           multiSelectFieldBloc1,
           multiSelectFieldBloc3,
@@ -305,7 +309,8 @@ void main() {
         final fieldBlocs = <FieldBloc>[
           groupFieldWithSingleFieldBlocs1,
         ];
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[
           textFieldBloc3,
           textFieldBloc4,
         ];
@@ -330,7 +335,8 @@ void main() {
         final fieldBlocs = <FieldBloc>[
           fieldBlocList21,
         ];
-        final expectedSingleFieldBlocs = <SingleFieldBloc>[
+        final expectedSingleFieldBlocs =
+            <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[
           textFieldBloc3,
           textFieldBloc4,
         ];

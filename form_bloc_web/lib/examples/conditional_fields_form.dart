@@ -4,7 +4,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 void main() => runApp(const App());
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class ConditionalFieldsFormBloc extends FormBloc<String, String> {
 }
 
 class ConditionalFieldsForm extends StatelessWidget {
-  const ConditionalFieldsForm({Key? key}) : super(key: key);
+  const ConditionalFieldsForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +170,8 @@ class ConditionalFieldsForm extends StatelessWidget {
                                 FieldBlocBuilderControlAffinity.trailing,
                             body: Container(
                               alignment: Alignment.center,
-                              child: const Text('Do you want to see a secret field?'),
+                              child: const Text(
+                                  'Do you want to see a secret field?'),
                             ),
                           ),
                         ),
@@ -205,16 +206,18 @@ class LoadingDialog extends StatelessWidget {
         useRootNavigator: false,
         barrierDismissible: false,
         builder: (_) => LoadingDialog(key: key),
-      ).then((_) => FocusScope.of(context).requestFocus(FocusNode()));
+      ).then((_) {
+        if (context.mounted) FocusScope.of(context).requestFocus(FocusNode());
+      });
 
   static void hide(BuildContext context) => Navigator.pop(context);
 
-  const LoadingDialog({Key? key}) : super(key: key);
+  const LoadingDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Center(
         child: Card(
           child: Container(
@@ -230,7 +233,7 @@ class LoadingDialog extends StatelessWidget {
 }
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({Key? key}) : super(key: key);
+  const SuccessScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +252,8 @@ class SuccessScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton.icon(
               onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const ConditionalFieldsForm())),
+                  MaterialPageRoute(
+                      builder: (_) => const ConditionalFieldsForm())),
               icon: const Icon(Icons.replay),
               label: const Text('AGAIN'),
             ),

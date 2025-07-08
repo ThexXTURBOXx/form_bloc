@@ -14,10 +14,11 @@ abstract class FormBloc<SuccessResponse, FailureResponse>
     extends Cubit<FormBlocState<SuccessResponse, FailureResponse>> {
   /// See: [_setupStepValidationSubs].
   /// Each [FormBlocState.currentStep] has its own subscription
-  final Map<int, StreamSubscription> _stepValidationSubs = {};
+  final Map<int, StreamSubscription<ValidationStatus>> _stepValidationSubs = {};
 
   /// See [_setupFormBlocStateSubscription()].
-  StreamSubscription<FormBlocState>? _formBlocStateSubscription;
+  StreamSubscription<FormBlocState<dynamic, dynamic>>?
+      _formBlocStateSubscription;
 
   /// Subscription to the state of the submission
   /// for know if the current state is [FormBlocSubmitting].
@@ -34,7 +35,9 @@ abstract class FormBloc<SuccessResponse, FailureResponse>
   /// Indicates if the [_fieldBlocs] must be autoValidated.
   final bool _autoValidate;
 
-  late final StreamSubscription _setupAreAllFieldsValidSubscriptionSubscription;
+  late final StreamSubscription<
+          Map<int, Iterable<FieldBloc<FieldBlocStateBase>>>>
+      _setupAreAllFieldsValidSubscriptionSubscription;
 
   FormBloc({
     bool isLoading = false,

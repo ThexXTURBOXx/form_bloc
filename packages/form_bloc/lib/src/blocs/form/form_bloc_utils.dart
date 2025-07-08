@@ -3,15 +3,15 @@ part of '../field/field_bloc.dart';
 class FormBlocUtils {
   FormBlocUtils._();
 
-  static Iterable<SingleFieldBloc> getAllSingleFieldBlocs(
-      Iterable<FieldBloc> fieldBlocs) {
+  static Iterable<SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>
+      getAllSingleFieldBlocs(Iterable<FieldBloc> fieldBlocs) {
     return fieldBlocs.expand((fieldBloc) {
       if (fieldBloc is SingleFieldBloc) {
         return [fieldBloc];
       } else if (fieldBloc is MultiFieldBloc) {
         return getAllSingleFieldBlocs(fieldBloc.flatFieldBlocs);
       }
-      return const <SingleFieldBloc>[];
+      return const <SingleFieldBloc<dynamic, dynamic, dynamic, dynamic>>[];
     });
   }
 
@@ -240,7 +240,7 @@ class FormBlocUtils {
   }
 
   static List<dynamic> fieldBlocListToFieldBlocsStatesList(
-      ListFieldBloc fieldBlocList) {
+      ListFieldBloc<dynamic, dynamic> fieldBlocList) {
     final list = <dynamic>[];
 
     for (var fieldBloc in fieldBlocList.state.fieldBlocs) {
@@ -255,9 +255,9 @@ class FormBlocUtils {
     return list;
   }
 
-  static Iterable<FieldBlocState> flattenFieldBlocsStateList(
-      Iterable<dynamic> fieldBlocStateList) {
-    final list = <FieldBlocState>[];
+  static Iterable<FieldBlocState<dynamic, dynamic, dynamic>>
+      flattenFieldBlocsStateList(Iterable<dynamic> fieldBlocStateList) {
+    final list = <FieldBlocState<dynamic, dynamic, dynamic>>[];
 
     for (var fieldBlocState in fieldBlocStateList) {
       if (fieldBlocState is FieldBlocState) {
@@ -354,7 +354,7 @@ class FormBlocUtils {
 
   static void updateFormBloc({
     required Iterable<FieldBloc> fieldBlocs,
-    required FormBloc? formBloc,
+    required FormBloc<dynamic, dynamic>? formBloc,
     bool autoValidate = false,
   }) {
     if (formBloc == null) return;
@@ -366,7 +366,7 @@ class FormBlocUtils {
 
   static void removeFormBloc({
     required Iterable<FieldBloc> fieldBlocs,
-    required FormBloc? formBloc,
+    required FormBloc<dynamic, dynamic>? formBloc,
   }) {
     if (formBloc == null) return;
 

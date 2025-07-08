@@ -8,8 +8,7 @@ final colors2 = <Color>[
 
 final mainGradient = LinearGradient(colors: colors);
 
-final drawerBodyGradient =
-    LinearGradient(colors: colors2);
+final drawerBodyGradient = LinearGradient(colors: colors2);
 
 final scaffoldBodyGradient = LinearGradient(colors: colors);
 
