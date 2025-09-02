@@ -165,48 +165,66 @@ class RadioButtonGroupFieldBlocBuilder<Value> extends StatelessWidget {
         style: fieldTheme.textStyle!,
         color: fieldTheme.textColor!,
       ),
-      child: GroupView(
-        style: groupStyle,
-        padding: Style.getGroupFieldBlocContentPadding(
-          isVisible: true,
-          decoration: decoration,
-        ),
-        count: state.items.length,
-        builder: (context, index) {
-          final item = state.items[index];
-          final fieldItem = itemBuilder(context, item);
+      child: RadioGroup(
+        onChanged: (value) {
+          if (value == null) {
+            return;
+          }
+          final fieldItem = itemBuilder(context, value);
           final isEnabled = isFieldEnabled && fieldItem.isEnabled;
-
-          final onChanged = fieldBlocBuilderOnChange<Value?>(
+          fieldBlocBuilderOnChange<Value?>(
             isEnabled: isEnabled,
             nextFocusNode: nextFocusNode,
             onChanged: (value) {
               selectFieldBloc.changeValue(value);
               fieldItem.onTap?.call();
             },
-          );
-
-          return ItemGroupTile(
-            customBorder: Style.getInputBorder(
-              decoration: decoration,
-              decorationTheme: fieldTheme.decorationTheme!,
-            ),
-            onTap: fieldTheme.canTapItemTile && onChanged != null
-                ? () => onChanged(
-                    fieldTheme.canDeselect && state.value == item ? null : item)
-                : null,
-            leading: Radio<Value>(
-              value: item,
-              fillColor: fieldTheme.radioTheme?.fillColor,
-              overlayColor: fieldTheme.radioTheme?.overlayColor,
-              splashRadius: fieldTheme.radioTheme?.splashRadius,
-              groupValue: state.value,
-              toggleable: fieldTheme.canDeselect,
-              onChanged: onChanged,
-            ),
-            content: fieldItem,
-          );
+          )?.call(value);
         },
+        groupValue: state.value,
+        child: GroupView(
+          style: groupStyle,
+          padding: Style.getGroupFieldBlocContentPadding(
+            isVisible: true,
+            decoration: decoration,
+          ),
+          count: state.items.length,
+          builder: (context, index) {
+            final item = state.items[index];
+            final fieldItem = itemBuilder(context, item);
+            final isEnabled = isFieldEnabled && fieldItem.isEnabled;
+
+            final onChanged = fieldBlocBuilderOnChange<Value?>(
+              isEnabled: isEnabled,
+              nextFocusNode: nextFocusNode,
+              onChanged: (value) {
+                selectFieldBloc.changeValue(value);
+                fieldItem.onTap?.call();
+              },
+            );
+
+            return ItemGroupTile(
+              customBorder: Style.getInputBorder(
+                decoration: decoration,
+                decorationTheme: fieldTheme.decorationTheme!,
+              ),
+              onTap: fieldTheme.canTapItemTile && onChanged != null
+                  ? () => onChanged(
+                      fieldTheme.canDeselect && state.value == item
+                          ? null
+                          : item)
+                  : null,
+              leading: Radio<Value>(
+                value: item,
+                fillColor: fieldTheme.radioTheme?.fillColor,
+                overlayColor: fieldTheme.radioTheme?.overlayColor,
+                splashRadius: fieldTheme.radioTheme?.splashRadius,
+                toggleable: fieldTheme.canDeselect,
+              ),
+              content: fieldItem,
+            );
+          },
+        ),
       ),
     );
   }
