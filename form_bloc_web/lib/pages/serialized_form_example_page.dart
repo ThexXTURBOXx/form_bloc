@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:form_bloc_web/examples/serialized_form.dart';
 import 'package:form_bloc_web/widgets/widgets.dart';
 

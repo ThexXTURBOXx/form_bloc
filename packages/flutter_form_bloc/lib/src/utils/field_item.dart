@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template flutter_form_bloc.FieldBlocBuilder.itemBuilder}
 /// This function takes the `context` and the `value`

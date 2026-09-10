@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_form_bloc: ^0.31.0
+  material_ui: ^1.2.0
 
 dev_dependencies:
   flutter_test:

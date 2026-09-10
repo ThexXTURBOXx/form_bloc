@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:form_bloc_web/examples/simple_form.dart';
 import 'package:form_bloc_web/widgets/widgets.dart';
 
@@ -67,7 +67,7 @@ But also import material library.
 '''),
         CodeCard.main(
           code: '''
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 ''',
         ),

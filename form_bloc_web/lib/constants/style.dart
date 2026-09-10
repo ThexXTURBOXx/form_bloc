@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final colors = <Color>[Colors.indigo, Colors.deepPurpleAccent];
 final colors2 = <Color>[

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_form_bloc/src/suffix_buttons/suffix_button_bloc_builder.dart';
 import 'package:flutter_form_bloc/src/theme/form_bloc_theme.dart';
 import 'package:flutter_form_bloc/src/theme/suffix_button_themes.dart';
